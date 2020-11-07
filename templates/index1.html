@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="de-DE" prefix="og: http://ogp.me/ns#">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<link rel="author" href="https://lautenschlager.de" />
+<link rel="icon" type="image/png" sizes="32x32" href="../static/img/favicon.png">
+<link href="https://fonts.googleapis.com/css?family=Raleway&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" type="text/css" href="../static/css/normalize.min.css" media="all" />
+<link rel="stylesheet" type="text/css" href="../static/css/flexboxgrid.css" media="all" />
+<link rel="stylesheet" type="text/css" href="../static/css/theme.css" media="all" />
+
+<link rel="stylesheet" href="{{ url_for('static', filename='../static/css/normalize.min.css') }}" >
+<link rel="stylesheet" href="{{ url_for('static', filename='../static/css/flexboxgrid.css') }}" >
+<link rel="stylesheet"  href="{{ url_for('static', filename='../static/css/theme.css') }}" >
+
+
+<title>Total Revolving Balance Predication</title>
+</head>
+
+<body>
+    <header class="fade-in">
+        <div class="navigation-bar flex middle-xs">
+            <img src="../static/img/excelrlogo.jpg" class="logo">
+        </div>
+        <div class="hero flex middle-xs"
+            style="background-image: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7)), url('../static/img/Data.jpg')">
+            <div class="hero-text ">
+                <h1>Select Method for Input for Predicting Total Revolving Balance - </h1>
+                    <p>Enter Value Manually</p>
+                    <form class="w-100 border border-light p-5" action="{{ url_for('manual_page')}}" method="post">
+                        <input type="submit" value="CLICK HERE">                   
+                    </form>
+                    <p>Upload a CSV File</p>
+                    <form class="w-100 border border-light p-5" action="{{ url_for('read_file')}}" method="post">
+                        <input type="submit" value="CLICK HERE">
+                    </form>
+                        <p class="p1">
+                    Project Obejctive -
+                    Many credit card providers need to decide the credit card limit for their customers, here in this
+                    project we will predict credit card revolving balance based on certain parameters of customers to
+                    decide the credit card limit.Our model is trained on 88k datapoint using hyper-parameter tuned Xgboost Model. The Final 22 features chosen gives us the least rmse.
+                </p>
+                <p class="p2">A Machine Learning Web App To Predict the Credit Card Revolving Balance Build With Flask
+                    by :-- Harsh,Vikas,Sumit,Ankit </p>
+                <p class="p3"> Guided By - Munmun Ma'am, Vinod Sir</p>
+            </div>
+        </div>
+    </header>
+    </footer>
+    </div>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?callback=polyfillsAreLoaded" defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="../static/js/script.js" defer></script>
+</body>
+
+</html>

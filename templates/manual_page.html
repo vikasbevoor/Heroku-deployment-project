@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="../static/img/favicon.png">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='../static/css/style.css') }}">
+
+    <title>Predicting Revolving Balance</title>
+</head>
+
+<body>
+    <div class="row mb-5">
+        <nav class="w-100 navbar navbar-expand-lg navbar-dark teal">
+            <div class="container">
+                <div class="brand-title">
+                    <h2>ExcelR - Credit Card Revolving Balance Prediction</h2>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <form class="w-100 border border-light p-5" action="{{ url_for('predict')}}" method="post">
+        <div class="row">
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <select class="form-control" name="Experience" required>
+                        <option value="">Select Experience of the customer</option>
+                        <option value="< 1 year">
+                            < 1 year</option>
+                        <option value="1 year">1 year</option>
+                        <option value="2 years">2 years</option>
+                        <option value="3 years">3 years</option>
+                        <option value="4 years">4 years</option>
+                        <option value="5 years">5 years</option>
+                        <option value="6 years">6 years</option>
+                        <option value="7 years">7 years</option>
+                        <option value="8 years">8 years</option>
+                        <option value="9 years">9 years</option>
+                        <option value="10+ years">10+ years</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <select class="form-control" name="terms" required>
+                        <option value="">Select terms: term of loan (in months)</option>
+                        <option value="36 months">36 months</option>
+                        <option value="60 months">60 months</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <select class="form-control" name="home_ownership" required>
+                        <option value="">Select Type Of Home Ownership</option>
+                        <option value="ANY">ANY</option>
+                        <option value="MORTGAGE">MORTGAGE</option>
+                        <option value="NONE">NONE</option>
+                        <option value="OTHER">OTHER</option>
+                        <option value="OWN">OWN</option>
+                        <option value="RENT">RENT</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <select class="form-control" name="verification_status" required>
+                        <option value="">Select Verification Status:status of income verified by the bank</option>
+                        <option value="Not Verified">Not Verified</option>
+                        <option value="Source Verified">Source Verified</option>
+                        <option value="Verified">Verified</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <select class="form-control" name="purpose" required>
+                        <option value="">Select Purpose:purpose of loan</option>
+                        <option value="credit_card">credit_card</option>
+                        <option value="debt_consolidation">debt_consolidation</option>
+                        <option value="home_improvement">home_improvement</option>
+                        <option value="major_purchase">major_purchase</option>
+                        <option value="medical(or)education">medical(or)education</option>
+                        <option value="other">other</option>
+                        <option value="small_business">small_business</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <select class="form-control" name="initial_list_status" required>
+                        <option value="">Select status of the loan - w(waiting),f(forwarded)</option>
+                        <option value="f">f</option>
+                        <option value="w">w</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <select class="form-control" name="grade" required>
+                        <option value="">Select Grade:assigned by the bank</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>
+                        <option value="D">D</option>
+                        <option value="E">E</option>
+                        <option value="F">F</option>
+                        <option value="G">G</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <input class="form-control" type="number" step="any" id="annualIncInput" name="annual_inc"
+                        required="required" min="0" max="9500000" />
+                    <label for="annualIncInput">Annual Income</label>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <input class="form-control" type="number" step="any" id="rateOfInterestInput" name="Rate_of_intrst"
+                        required="required" min="5" max="30" />
+                    <label for="rateOfInterestInput">Rate of Interest</label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <input class="form-control" type="number" step="any" name="loan_amnt" id="loanAmntInput"
+                        required="required" min="500" max="40000" />
+                    <label for="loanAmntInput">Loan Amount</label>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <input class="form-control" type="number" step="any" id="debtIncomeRatio" name="debt_income_ratio"
+                        required="required" min="0" max="1000" />
+                    <label for="debtIncomeRatio">debt-to-income ratio : ratio of member's total monthly debt</label>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <input class="form-control" type="number" step="any" id="delinqTwoYrs" name="delinq_2yrs"
+                        required="required" min="0" max="50" />
+                    <label for="delinqTwoYrs">Delinquency of past 2 years : failure to pay debt by due date</label>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <input class="form-control" type="number" step="any" id="inq_last_6mths" name="inq_last_6mths"
+                        required="required" min="0" max="40" />
+                    <label for="inq_last_6mths">Inquiries made in past 6 months</label>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <input class="form-control" type="number" step="any" id="numbCredit" name="numb_credit"
+                        required="required" min="0" max="100" />
+                    <label for="numbCredit">number of open credit line in member's credit line</label>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <input class="form-control" type="number" step="any" id="pubRec" name="pub_rec" required="required"
+                        min="0" max="100" />
+                    <label for="pubRec">number of derogatory public records</label>
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <input class="form-control" type="number" step="any" id="total_credits" name="total_credits"
+                        required="required" min="1" max="200" />
+                    <label for="total_credits">Total number of credit lines available in</label>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <input class="form-control" type="number" step="any" id="totalRecInt" name="total_rec_int"
+                        required="required" min="0" max="25000" />
+                    <label for="totalRecInt">Total interest received till date</label>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <input class="form-control" type="number" step="any" id="total_rec_late_fee"
+                        name="total_rec_late_fee" required="required" min="0" max="400" />
+                    <label for="total_rec_late_fee">Late fee received till date</label>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <input class="form-control" type="number" step="any" name="recoveries" id="recoveries"
+                        required="required" min="0" max="35000" />
+                    <label for="recoveries">No. of recoveries</label>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <input class="form-control" type="number" step="any" id="mths_since_last_delinq"
+                        name="mths_since_last_delinq" required="required" min="0" max="200" />
+                    <label for="mths_since_last_delinq">Number of months since last delinq</label>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <input class="form-control" type="number" step="any" id="totCurrBal" name="tot_curr_bal"
+                        required="required" />
+                    <label for="totCurrBal">total current balance of all accounts</label>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="md-form mt-3">
+                    <input class="form-control" type="number" step="any" id="totColleAmt" name="tot_colle_amt"
+                        required="required" />
+                    <label for="totColleAmt">total collection amount ever owed</label>
+                </div>
+            </div>
+
+        </div>
+        <button type="submit" class="btn btn-outline-default">Predict Revolving Balance</button>
+    </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
+</body>
+
+</html>
